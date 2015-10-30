@@ -1,0 +1,16 @@
+Source: 96boards-tools
+Section: utils
+Priority: optional
+Maintainer: Ricardo Salveti <ricardo.salveti@linaro.org>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+Vcs-Git: https://github.com/96boards/96boards-tools.git
+Homepage: https://github.com/96boards/96boards-tools
+
+Package: 96boards-tools-common
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}
+Description: common files used by 96boards
+ This package provides configuration and tools used to help
+ bringing a common user experience across different 96Boards.

@@ -1,0 +1,8 @@
+# Udev rules used to provide a common UART device name across different boards
+
+# DragonBoard 410c
+KERNEL=="ttyMSM0",	SYMLINK+="tty96B0"
+KERNEL=="ttyMSM1",	SYMLINK+="tty96B1"
+# HiKey
+KERNEL=="ttyAMA1",	SYMLINK+="tty96B0"
+KERNEL=="ttyAMA2",	SYMLINK+="tty96B1"
