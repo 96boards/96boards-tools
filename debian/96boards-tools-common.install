@@ -1,1 +1,3 @@
 70-96boards-common.rules	lib/udev/rules.d/
+resize-helper               usr/sbin
+resize-helper.service       lib/systemd/system
