@@ -1,3 +1,10 @@
+96boards-tools (0.2) jessie; urgency=medium
+
+  * 70-96boards-common.rules: fix UART port assignments
+    - Patch by Grant Likely <grant.likely@linaro.org>
+
+ -- Ricardo Salveti de Araujo <rsalveti@rsalveti.net>  Wed, 02 Dec 2015 21:12:29 -0200
+
 96boards-tools (0.1) jessie; urgency=medium
 
   * Initial upload
