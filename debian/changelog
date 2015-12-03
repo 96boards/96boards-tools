@@ -1,3 +1,10 @@
+96boards-tools (0.3) UNRELEASED; urgency=medium
+
+  [ Nicolas Dechesne ]
+  * add resize-helper script and related systemd service
+
+ -- Fathi Boudra <fathi.boudra@linaro.org>  Thu, 03 Dec 2015 17:13:54 +0200
+
 96boards-tools (0.2) jessie; urgency=medium
 
   * 70-96boards-common.rules: fix UART port assignments
