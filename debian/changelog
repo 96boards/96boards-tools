@@ -5,6 +5,7 @@
 
   [ Fathi Boudra ]
   * Add myself to Uploaders field.
+  * debian/copyright: add resize-helper.
 
  -- Fathi Boudra <fathi.boudra@linaro.org>  Thu, 03 Dec 2015 17:13:54 +0200
 
