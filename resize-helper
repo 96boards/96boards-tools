@@ -37,10 +37,9 @@ ROOT_DEVICE=$(findmnt --noheadings --output=SOURCE / | cut -d'[' -f1)
 # prune root device (for example UUID)
 ROOT_DEVICE=$(realpath ${ROOT_DEVICE})
 # get the partition number
-PARTITION=$(lsblk --noheadings --output=MAJ:MIN ${ROOT_DEVICE} | cut -d':' -f2)
+PARTITION=$(udevadm info --query=property --name=${ROOT_DEVICE} | grep '^PARTN=' | cut -d'=' -f2)
 # find the block device
-DEVICE=$(lsblk --noheadings --output=MAJ:MIN ${ROOT_DEVICE} | cut -d':' -f1)
-DEVICE=$(lsblk --noheadings --output=NAME,MAJ:MIN | grep "${DEVICE}:0"  | cut -d' ' -f1)
+DEVICE=$(udevadm info --query=path --name=${ROOT_DEVICE} | awk -F'/' '{print $(NF-1)}')
 DEVICE="/dev/${DEVICE}"
 
 ${SGDISK} -e ${DEVICE}
