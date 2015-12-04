@@ -1,4 +1,4 @@
-96boards-tools (0.3) UNRELEASED; urgency=medium
+96boards-tools (0.3) unstable; urgency=medium
 
   [ Nicolas Dechesne ]
   * Add resize-helper script and related systemd service.
