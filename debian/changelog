@@ -1,3 +1,9 @@
+96boards-tools (0.4) unstable; urgency=medium
+
+  * Add 96boards-sensors.sh script to /etc/profile.d/ directory.
+
+ -- Fathi Boudra <fathi.boudra@linaro.org>  Thu, 04 Feb 2016 10:30:08 +0200
+
 96boards-tools (0.3) unstable; urgency=medium
 
   [ Nicolas Dechesne ]

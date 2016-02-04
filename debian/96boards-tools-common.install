@@ -1,3 +1,4 @@
 70-96boards-common.rules	lib/udev/rules.d/
 resize-helper               usr/sbin
 resize-helper.service       lib/systemd/system
+96boards-sensors.sh         etc/profile.d/
