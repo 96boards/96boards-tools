@@ -5,7 +5,6 @@ Source: https://github.com/96boards/96boards-tools
 
 Files: 70-96boards-common.rules
 Copyright: 2015 Linaro
-           2015 Ricardo Salveti <ricardo.salveti@linaro.org>
 License: GPL-2+
 
 Files: resize-helper*
@@ -14,7 +13,7 @@ Copyright: 2015 Linaro
 License: BSD-2-Clause
 
 Files: debian/*
-Copyright: 2015 Ricardo Salveti <ricardo.salveti@linaro.org>
+Copyright: 2015 Linaro
            2015 Nicolas Dechesne <nicolas.dechesne@linaro.org>
 License: GPL-2+
 
