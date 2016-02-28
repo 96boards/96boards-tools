@@ -1,4 +1,4 @@
-96boards-tools (0.5) UNRELEASED; urgency=medium
+96boards-tools (0.5) unstable; urgency=medium
 
   * debian/copyright: removing myself as copyright owner
   * Adding zz-copy-devicetree script
