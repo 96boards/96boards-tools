@@ -2,3 +2,5 @@
 resize-helper               usr/sbin
 resize-helper.service       lib/systemd/system
 96boards-sensors.sh         etc/profile.d/
+zz-copy-devicetree          etc/kernel/postinst.d
+zz-copy-devicetree          etc/kernel/postrm.d

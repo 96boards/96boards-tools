@@ -1,3 +1,10 @@
+96boards-tools (0.5) UNRELEASED; urgency=medium
+
+  * debian/copyright: removing myself as copyright owner
+  * Adding zz-copy-devicetree script
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@linaro.org>  Sun, 28 Feb 2016 01:42:58 -0300
+
 96boards-tools (0.4) unstable; urgency=medium
 
   * Add 96boards-sensors.sh script to /etc/profile.d/ directory.

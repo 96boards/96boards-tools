@@ -7,6 +7,10 @@ Files: 70-96boards-common.rules
 Copyright: 2015 Linaro
 License: GPL-2+
 
+Files: zz-copy-devicetree
+Copyright: 2016 Linaro
+License: GPL-2+
+
 Files: resize-helper*
 Copyright: 2015 Linaro
            2015 Fathi Boudra <fathi.boudra@linaro.org>
