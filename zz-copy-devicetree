@@ -1,0 +1,67 @@
+#!/bin/sh -e
+#
+# Copyright: (C) 2016 Linaro
+#
+# Author: Grant Likely <grant.likely@linaro.org>
+#         Ricardo Salveti <ricardo.salveti@linaro.org>
+#
+# This package is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This package is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>
+#
+# Copy the specified device tree into the boot partition/folder
+# Used as a temporary helper until the firmware can provide one by default
+
+version="$1"
+
+# passing the kernel version is required
+if [ -z "${version}" ]; then
+	echo >&2 "W: devicetree: ${DPKG_MAINTSCRIPT_PACKAGE:-kernel package} did not pass a version number"
+	exit 2
+fi
+
+# exit if system does not need a devicetree to be specified
+if [ ! -e /etc/default/kernel ]; then
+	exit 0
+fi
+. /etc/default/kernel
+if [ "$KERNEL_DEVICETREE" = '' ]; then
+	exit 0
+fi
+
+# absolute file name of kernel image may be passed as a second argument;
+# copy the devicetree into the same directory
+if [ -n "$2" ]; then
+	bootdir=$(dirname "$2")
+fi
+
+set -- $DEB_MAINT_PARAMS
+mode="${1#\'}"
+mode="${mode%\'}"
+case $0:$mode in
+	# Only run on postinst configure and postrm remove
+	*/postinst.d/*:|*/postinst.d/*:configure)
+	for i in /usr/lib/linux-image-${version}/* /lib/firmware/${version}/device-tree; do
+		if [ -e "${i}/${KERNEL_DEVICETREE}.dtb" ]; then
+			echo >&2 "Copying ${KERNEL_DEVICETREE}.dtb as ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb"
+			cp ${i}/${KERNEL_DEVICETREE}.dtb ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb
+			break;
+		fi
+	done
+	;;
+	*/postrm.d/*:|*/postrm.d/*:remove)
+	if [ -e "${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb" ]; then
+		echo >&2 "Removing ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb"
+		rm ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb
+	fi
+	;;
+esac
