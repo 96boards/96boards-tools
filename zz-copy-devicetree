@@ -52,16 +52,16 @@ case $0:$mode in
 	*/postinst.d/*:|*/postinst.d/*:configure)
 	for i in /usr/lib/linux-image-${version}/* /lib/firmware/${version}/device-tree; do
 		if [ -e "${i}/${KERNEL_DEVICETREE}.dtb" ]; then
-			echo >&2 "Copying ${KERNEL_DEVICETREE}.dtb as ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb"
-			cp ${i}/${KERNEL_DEVICETREE}.dtb ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb
+			echo >&2 "Copying ${KERNEL_DEVICETREE}.dtb as ${bootdir}/${KERNEL_DEVICETREE}.dtb-${version}"
+			cp ${i}/${KERNEL_DEVICETREE}.dtb ${bootdir}/${KERNEL_DEVICETREE}.dtb-${version}
 			break;
 		fi
 	done
 	;;
 	*/postrm.d/*:|*/postrm.d/*:remove)
-	if [ -e "${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb" ]; then
-		echo >&2 "Removing ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb"
-		rm ${bootdir}/${KERNEL_DEVICETREE}-${version}.dtb
+	if [ -e "${bootdir}/${KERNEL_DEVICETREE}.dtb-${version}" ]; then
+		echo >&2 "Removing ${bootdir}/${KERNEL_DEVICETREE}.dtb-${version}"
+		rm ${bootdir}/${KERNEL_DEVICETREE}.dtb-${version}
 	fi
 	;;
 esac

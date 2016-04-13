@@ -1,3 +1,9 @@
+96boards-tools (0.6) UNRELEASED; urgency=medium
+
+  * zz-copy-devicetree: name dtb similarly to scheme used by initrd.img
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@linaro.org>  Tue, 12 Apr 2016 20:58:41 -0300
+
 96boards-tools (0.5) unstable; urgency=medium
 
   * debian/copyright: removing myself as copyright owner
