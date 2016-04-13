@@ -1,6 +1,8 @@
 96boards-tools (0.6) UNRELEASED; urgency=medium
 
-  * zz-copy-devicetree: name dtb similarly to scheme used by initrd.img
+  * zz-copy-devicetree:
+    - name dtb similarly to scheme used by initrd.img
+    - create generic link for the device-tree file, if also used by the kernel
 
  -- Ricardo Salveti de Araujo <ricardo.salveti@linaro.org>  Tue, 12 Apr 2016 20:58:41 -0300
 
