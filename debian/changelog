@@ -1,4 +1,4 @@
-96boards-tools (0.6) UNRELEASED; urgency=medium
+96boards-tools (0.6) unstable; urgency=medium
 
   * zz-copy-devicetree:
     - name dtb similarly to scheme used by initrd.img
