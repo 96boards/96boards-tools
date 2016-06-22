@@ -1,6 +1,10 @@
-70-96boards-common.rules	lib/udev/rules.d/
+70-96boards-common.rules    lib/udev/rules.d/
 resize-helper               usr/sbin
 resize-helper.service       lib/systemd/system
 96boards-sensors.sh         etc/profile.d/
 zz-copy-devicetree          etc/kernel/postinst.d
 zz-copy-devicetree          etc/kernel/postrm.d
+grub-install-hikey          usr/sbin
+flash-hikey                 usr/share/96boards-tools/
+grub/*                      usr/share/96boards-tools/grub
+extlinux/*                  usr/share/96boards-tools/extlinux

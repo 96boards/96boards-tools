@@ -1,3 +1,10 @@
+96boards-tools (0.8) jessie; urgency=medium
+
+  * Add script for setting up grub for hikey
+  * Add flash-hikey script for calling from installer
+
+ -- Riku Voipio <riku.voipio@linaro.org>  Wed, 29 Jun 2016 10:17:58 +0300
+
 96boards-tools (0.7) jessie; urgency=medium
 
   * resize-helper: fixing part number and checking for table type
