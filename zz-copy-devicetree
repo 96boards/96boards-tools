@@ -42,6 +42,8 @@ fi
 # copy the devicetree into the same directory
 if [ -n "$2" ]; then
 	bootdir=$(dirname "$2")
+else
+	bootdir=/boot
 fi
 
 set -- $DEB_MAINT_PARAMS

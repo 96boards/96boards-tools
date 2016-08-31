@@ -1,0 +1,8 @@
+#!/bin/sh
+# This script is called by the graphical installer, and:
+#  * it is called from the folder which contains the build to flash
+#  * with "-o /dev/<output>"
+
+OUTPUT=$(basename $2)
+zcat $PWD/boot.img.gz  |sudo dd of=/dev/${OUTPUT}p6 bs=4M oflag=sync status=noxfer
+zcat $PWD/rootfs.img.gz|sudo dd of=/dev/${OUTPUT}p9 bs=4M oflag=sync status=noxfer

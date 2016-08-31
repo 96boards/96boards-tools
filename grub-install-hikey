@@ -1,0 +1,79 @@
+#!/bin/bash -e
+# script to install/update grub on hikey
+# supports only install to eMMC or SD
+
+output_path=/boot/efi/EFI/BOOT
+sdcard=0
+
+show_help() {
+    echo "install-grub-hikey -s -o /path
+    where:
+        -h show this help text
+        -s set up with SDCARD device paths, else uses eMMC defaults
+        -o output path (typically /boot/efi/BOOT/
+    Set up grub for hikey board"
+}
+
+while getopts "h?sb:" opt; do
+    case "$opt" in
+    h|\?)
+        show_help
+        exit 0
+        ;;
+    s)  sdcard=1
+        ;;
+    f)  output_path=$OPTARG
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+if [ ! -d $output_path ]
+then
+    echo output path $output_path does not exit
+    exit 1
+fi
+
+[ -e /boot/grubenv ]||grub-editenv /boot/grubenv create
+[ -e /etc/default/kernel ]||echo "KERNEL_DEVICETREE=hi6220-hikey" >> /etc/default/kernel
+
+GRUB_MODULES="boot chain configfile echo efinet eval ext2 fat font gettext gfxterm gzio help linux loadenv lsefi normal part_gpt part_msdos read regexp search search_fs_file search_fs_uuid search_label terminal terminfo test tftp time"
+
+if [ $sdcard -eq 1 ]
+then
+    conf=/usr/share/96boards-tools/grub/grub-sd.configfile
+    root='(hd1,msdos2)'
+    rootdev=/dev/mmcblk1p2
+else
+    conf=/usr/share/96boards-tools/grub/grub.configfile
+    root='(hd0,gpt9)'
+    rootdev=/dev/mmcblk0p9
+fi
+
+grub-mkimage \
+    --verbose \
+    --config=$conf \
+    --output=$output_path/grubaa64.efi \
+    --format=arm64-efi \
+     $GRUB_MODULES
+
+if [ $sdcard -eq 1 ]
+then
+    cp $output_path/grubaa64.efi $output_path/BOOTAA64.EFI
+fi
+
+KERNEL_VERSION=`basename /boot/vmlinuz-* | sed -e "s,^[^0-9]*-,,g"`
+/etc/kernel/postinst.d/zz-copy-devicetree $KERNEL_VERSION
+
+cp -a /usr/lib/grub/arm64-efi /boot/grub
+cp /usr/share/96boards-tools/grub/grub-fastboot.cfg /boot/grub/custom.cfg
+mkdir -p /boot/grub/fonts
+cp /usr/share/grub/unicode.pf2 /boot/grub/fonts
+
+sed -e "s,KERNEL_VERSION,$KERNEL_VERSION," \
+    -e "s,ROOTDEV,$rootdev," -e "s/ROOT/$root/"  \
+    /usr/share/96boards-tools/grub/grub-hikey.cfg.in > /boot/grub/grub.cfg
+sed -i -e 's/^GRUB_CMDLINE_LINUX_DEFAULT.*/GRUB_CMDLINE_LINUX_DEFAULT="efi=noruntime rw quiet"/g' /etc/default/grub
+
