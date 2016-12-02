@@ -48,6 +48,6 @@ if [ "$PART_TABLE_TYPE" = "gpt" ]; then
 	${PARTPROBE}
 fi
 
-${PARTED} ${DEVICE} resizepart ${PART_ENTRY_NUMBER} Yes 100%
+${PARTED} ${DEVICE} resizepart ${PART_ENTRY_NUMBER} 100%
 ${PARTPROBE}
 ${RESIZE2FS} "${ROOT_DEVICE}"
