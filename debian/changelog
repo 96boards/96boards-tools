@@ -1,3 +1,10 @@
+96boards-tools (0.9) unstable; urgency=medium
+
+  * resize-helper: remove 'Yes' from parted cmdline. This is not a valid
+    option with latest parted.
+
+ -- Fathi Boudra <fathi.boudra@linaro.org>  Sun, 11 Dec 2016 13:18:54 +0200
+
 96boards-tools (0.8) unstable; urgency=medium
 
   * Add script for setting up grub for hikey
