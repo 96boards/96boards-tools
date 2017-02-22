@@ -1,3 +1,12 @@
+96boards-tools (0.10) unstable; urgency=medium
+
+  * resize-helper: use ConditionFirstBoot directive
+    ConditionFirstBoot when set to yes would be run when booting for first
+    time. There is no need to manually enabled/disable the service then and
+    reboot immediately after resize is done.
+
+ -- Fathi Boudra <fathi.boudra@linaro.org>  Wed, 22 Feb 2017 16:25:11 +0200
+
 96boards-tools (0.9) unstable; urgency=medium
 
   * resize-helper: remove 'Yes' from parted cmdline. This is not a valid
