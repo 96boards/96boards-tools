@@ -3,6 +3,5 @@ if [ ! -e /var/lib/misc/firstrun ]; then
         /usr/sbin/resize-helper
         mkdir -p /var/lib/misc
         touch /var/lib/misc/firstrun
-        /sbin/reboot
 fi
 
