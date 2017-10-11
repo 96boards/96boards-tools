@@ -1,3 +1,12 @@
+96boards-tools (0.11) unstable; urgency=medium
+
+  * resize-disk: add a new script.
+    This script will run once on first boot. It is helpful in resizing
+    the SD cards or other boot media on first boot.
+  * resize-helper: revert "Use ConditionFirstBoot directive"
+
+ -- Fathi Boudra <fathi.boudra@linaro.org>  Wed, 11 Oct 2017 16:25:11 +0200
+
 96boards-tools (0.10) unstable; urgency=medium
 
   * resize-helper: use ConditionFirstBoot directive
