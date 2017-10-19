@@ -1,9 +1,11 @@
 [Unit]
 Description=Resize root filesystem to fit available disk space
-After=systemd-remount-fs.service
+Wants=systemd-udevd.service systemd-udev-trigger.service
+After=systemd-remount-fs.service systemd-udevd.service
 
 [Service]
 Type=oneshot
+ExecStartPre=-/bin/udevadm settle
 ExecStart=-/usr/sbin/resize-helper
 ExecStartPost=/bin/systemctl disable resize-helper.service
 
