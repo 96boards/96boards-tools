@@ -1,3 +1,10 @@
+96boards-tools (0.12) unstable; urgency=medium
+
+  * Fix resize-disk on unpartitioned images
+  * Drop grub files
+
+ -- Riku Voipio <riku.voipio@linaro.org>  Fri, 02 Mar 2018 15:15:09 +0200
+
 96boards-tools (0.11) unstable; urgency=medium
 
   * resize-disk: add a new script.
