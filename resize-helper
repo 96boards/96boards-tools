@@ -54,7 +54,6 @@ if [ "$PART_TABLE_TYPE" = "gpt" ]; then
 	${SGDISK} -e ${DEVICE}
 	${PARTPROBE}
 fi
-
-${PARTED} ${DEVICE} resizepart ${PART_ENTRY_NUMBER} 100%
+echo -e "yes\n100%" | ${PARTED} ${DEVICE} ---pretend-input-tty unit % resizepart ${PART_ENTRY_NUMBER}
 ${PARTPROBE}
 ${RESIZE2FS} "${ROOT_DEVICE}"
