@@ -31,13 +31,20 @@ SGDISK=$(which sgdisk) || { echo "E: You must have sgdisk" && exit 1; }
 PARTED=$(which parted) || { echo "E: You must have parted" && exit 1; }
 PARTPROBE=$(which partprobe) || { echo "E: You must have partprobe" && exit 1; }
 RESIZE2FS=$(which resize2fs) || { echo "E: You must have resize2fs" && exit 1; }
+BLKID=$(which blkid) || { echo "E: You must have blkid" && exit 1; }
 
 # find root device
-ROOT_DEVICE=$(findmnt --noheadings --output=SOURCE / | cut -d'[' -f1)
+ROOT_DEVICE=$(findmnt / -o source -n)
 # prune root device (for example UUID)
 ROOT_DEVICE=$(realpath ${ROOT_DEVICE})
 # get the partition number and type
-PART_ENTRY_NUMBER=$(udevadm info --query=property --name=${ROOT_DEVICE} | grep '^ID_PART_ENTRY_NUMBER=' | cut -d'=' -f2)
+ROOT_PART_NAME=$(echo "$ROOT_DEVICE" | cut -d "/" -f 3)
+DEVICE_NAME=$(echo /sys/block/*/"${ROOT_PART_NAME}" | cut -d "/" -f 4)
+DEVICE="/dev/${DEVICE_NAME}"
+PART_ENTRY_NUMBER=$(cat "/sys/block/${DEVICE_NAME}/${ROOT_PART_NAME}/partition")
+PART_TABLE_TYPE=$(${BLKID} -o value -s PTTYPE "${DEVICE}")
+DEVICE_SIZE=$(cat "/sys/block/${DEVICE_NAME}/size")
+END_SIZE=$((DEVICE_SIZE - 1))
 
 # in case the root device is not on a partitioned media
 if [ "x$PART_ENTRY_NUMBER" = "x" ]; then
@@ -45,15 +52,10 @@ if [ "x$PART_ENTRY_NUMBER" = "x" ]; then
 	exit 0
 fi
 
-PART_TABLE_TYPE=$(udevadm info --query=property --name=${ROOT_DEVICE} | grep '^ID_PART_TABLE_TYPE=' | cut -d'=' -f2)
-# find the block device
-DEVICE=$(udevadm info --query=path --name=${ROOT_DEVICE} | awk -F'/' '{print $(NF-1)}')
-DEVICE="/dev/${DEVICE}"
-
 if [ "$PART_TABLE_TYPE" = "gpt" ]; then
 	${SGDISK} -e ${DEVICE}
 	${PARTPROBE}
 fi
-echo -e "yes\n100%" | ${PARTED} ${DEVICE} ---pretend-input-tty unit % resizepart ${PART_ENTRY_NUMBER}
+${PARTED} -m ${DEVICE} u s resizepart ${PART_ENTRY_NUMBER} ${END_SIZE}
 ${PARTPROBE}
 ${RESIZE2FS} "${ROOT_DEVICE}"
