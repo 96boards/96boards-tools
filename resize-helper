@@ -43,8 +43,6 @@ DEVICE_NAME=$(echo /sys/block/*/"${ROOT_PART_NAME}" | cut -d "/" -f 4)
 DEVICE="/dev/${DEVICE_NAME}"
 PART_ENTRY_NUMBER=$(cat "/sys/block/${DEVICE_NAME}/${ROOT_PART_NAME}/partition")
 PART_TABLE_TYPE=$(${BLKID} -o value -s PTTYPE "${DEVICE}")
-DEVICE_SIZE=$(cat "/sys/block/${DEVICE_NAME}/size")
-END_SIZE=$((DEVICE_SIZE - 1))
 
 # in case the root device is not on a partitioned media
 if [ "x$PART_ENTRY_NUMBER" = "x" ]; then
@@ -56,6 +54,6 @@ if [ "$PART_TABLE_TYPE" = "gpt" ]; then
 	${SGDISK} -e ${DEVICE}
 	${PARTPROBE}
 fi
-${PARTED} -m ${DEVICE} u s resizepart ${PART_ENTRY_NUMBER} ${END_SIZE}
+echo -e "yes\n100%" | ${PARTED} ${DEVICE} ---pretend-input-tty unit % resizepart ${PART_ENTRY_NUMBER}
 ${PARTPROBE}
 ${RESIZE2FS} "${ROOT_DEVICE}"
