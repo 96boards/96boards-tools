@@ -53,6 +53,7 @@ if [ "x$PART_ENTRY_NUMBER" = "x" ]; then
 fi
 
 if [ "$PART_TABLE_TYPE" = "gpt" ]; then
+	END_SIZE=$((DEVICE_SIZE - 34))
 	${SGDISK} -e ${DEVICE}
 	${PARTPROBE}
 fi
